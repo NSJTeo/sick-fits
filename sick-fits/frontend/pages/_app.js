@@ -1,9 +1,24 @@
+import nProgress from 'nprogress';
+import Router from 'next/router';
 import Page from '../components/Page';
+import '../components/styles/nprogress.css';
 
-export default function MyApp({ Component, pageProps }) {
+Router.events.on('routeChangeStart', () => {
+  nProgress.start();
+});
+
+Router.events.on('routeChangeComplete', () => {
+  nProgress.done();
+});
+
+Router.events.on('routeChangeError', () => {
+  nProgress.done();
+});
+
+export default function MyApp({ Component }) {
   return (
     <Page>
-      <Component {...pageProps} />
+      <Component />
     </Page>
   );
 }
