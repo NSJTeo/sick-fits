@@ -9,7 +9,7 @@ export default function useForm(initial = {}) {
       value = parseInt(value);
     }
     if (type === 'file') {
-      value[0] = e.target.files;
+      [value] = e.target.files;
     }
     setInputs({
       ...inputs,
@@ -23,7 +23,7 @@ export default function useForm(initial = {}) {
 
   function clearForm() {
     const blankState = Object.fromEntries(
-      Object.entries(inputs).map(([key, value]) => [key, null])
+      Object.entries(inputs).map(([key]) => [key, null])
     );
     setInputs(blankState);
   }
