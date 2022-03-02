@@ -6,7 +6,6 @@ export function formatMoney(amount = 0) {
   };
 
   if (!(amount % 100)) {
-    console.log('t');
     options.minimumFractionDigits = 0;
   }
 
