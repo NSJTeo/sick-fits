@@ -57,7 +57,3 @@ export default function Page({ children }) {
     </>
   );
 }
-
-Page.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node),
-};

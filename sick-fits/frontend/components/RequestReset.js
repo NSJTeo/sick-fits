@@ -18,12 +18,9 @@ export default function RequestReset() {
     email: '',
   });
 
-  const [sendRequest, { data, loading, error }] = useMutation(
-    REQUEST_RESET_MUTATION,
-    {
-      variables: inputs,
-    }
-  );
+  const [sendRequest, { data, error }] = useMutation(REQUEST_RESET_MUTATION, {
+    variables: inputs,
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
