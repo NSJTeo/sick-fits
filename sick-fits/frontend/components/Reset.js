@@ -22,7 +22,6 @@ const RESET_MUTATION = gql`
 `;
 
 export default function Reset({ token }) {
-  console.log(token);
   const { inputs, handleChange, resetForm } = useForm({
     email: '',
     password: '',
