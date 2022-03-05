@@ -1,15 +1,16 @@
-import "dotenv/config";
-import { config, createSchema } from "@keystone-next/keystone/schema";
-import { createAuth } from "@keystone-next/auth";
+import 'dotenv/config';
+import { config, createSchema } from '@keystone-next/keystone/schema';
+import { createAuth } from '@keystone-next/auth';
 import {
   withItemData,
   statelessSessions,
-} from "@keystone-next/keystone/session";
-import { User } from "./schemas/User";
-import { Product } from "./schemas/Product";
-import { ProductImage } from "./schemas/ProductImage";
-import { insertSeedData } from "./seed-data";
-import { sendPasswordResetEmail } from "./lib/mail";
+} from '@keystone-next/keystone/session';
+import { User } from './schemas/User';
+import { Product } from './schemas/Product';
+import { ProductImage } from './schemas/ProductImage';
+import { CartItem } from './schemas/CartItem';
+import { insertSeedData } from './seed-data';
+import { sendPasswordResetEmail } from './lib/mail';
 
 const databaseURL = process.env.DATABASE_URL;
 
@@ -19,17 +20,17 @@ const sessionConfig = {
 };
 
 const { withAuth } = createAuth({
-  listKey: "User",
-  identityField: "email",
-  secretField: "password",
+  listKey: 'User',
+  identityField: 'email',
+  secretField: 'password',
   initFirstItem: {
-    fields: ["name", "email", "password"],
+    fields: ['name', 'email', 'password'],
     // TODO: add roles
   },
   passwordResetLink: {
     async sendToken(args) {
       console.log(args);
-      await sendPasswordResetEmail(args.token, args.identity);
+      // await sendPasswordResetEmail(args.token, args.identity);
     },
   },
 });
@@ -43,10 +44,10 @@ export default withAuth(
       },
     },
     db: {
-      adapter: "mongoose",
+      adapter: 'mongoose',
       url: databaseURL,
       async onConnect(keystone) {
-        if (process.argv.includes("--seed-data")) {
+        if (process.argv.includes('--seed-data')) {
           await insertSeedData(keystone);
         }
       },
@@ -56,13 +57,14 @@ export default withAuth(
       User,
       Product,
       ProductImage,
+      CartItem,
     }),
     ui: {
       // TODO: change this for roles
       isAccessAllowed: ({ session }) => !!session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
-      User: "id",
+      User: 'id',
     }),
   })
 );
