@@ -6,6 +6,7 @@ import Supreme from './styles/Supreme';
 import { formatMoney } from '../lib/formatMoney';
 import { useCart } from '../lib/cartState';
 import CloseButton from './styles/CloseButton';
+import RemoveFromCart from './RemoveFromCart';
 
 const CartItemStyles = styled.li`
   padding: 1rem 0;
@@ -37,6 +38,7 @@ const CartItem = ({ cartItem }) => {
           {cartItem.quantity} &times; {formatMoney(product.price)}
         </em>
       </div>
+      <RemoveFromCart id={cartItem.id} />
     </CartItemStyles>
   );
 };
