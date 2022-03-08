@@ -21,11 +21,14 @@ const REMOVE_FROM_CART_MUTATION = gql`
   }
 `;
 
+const update = (cache, payload) => {
+  cache.evict(cache.identify(payload.data.deleteCartItem));
+};
+
 export default function RemoveFromCart({ id }) {
-  console.log(`remove ${id} from cart`);
   const [removeFromCart, { loading }] = useMutation(REMOVE_FROM_CART_MUTATION, {
     variables: { id },
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    update,
   });
   return (
     <BigButton
